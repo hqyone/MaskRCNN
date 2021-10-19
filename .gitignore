@@ -56,3 +56,10 @@ pip-delete-this-directory.txt
 .venv
 venv/
 ENV/
+
+# data
+data/
+
+#main-program
+main-program/
+
