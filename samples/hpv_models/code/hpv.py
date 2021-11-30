@@ -91,18 +91,11 @@ RESULTS_DIR = os.path.join(ROOT_DIR, "results/hpv/")
 #            VAL_IMAGE_IDS.append("\""+val+"\"")
 
 VAL_IMAGE_IDS = [
-    "0",
-    "1",
-    "2",
-    "3",
-    "4"
-    "5",
-    "6",
-    "7",
-    "8", "9", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100",
-    "200", "210", "220", "230", "240", "250", "260", "270", "280", "290", "300",
-    "310", "320", "330", "340", "350", "360", "370", "380", "390", "400",
-    "410", "420", "430", "440", "450", "460", "470", "471", "472", "473", "499"
+    "1456","1458","1489",
+    "xx_best_1_25_26_2",
+    "xx_best_3_26_25",
+    "xx_best_24_24_28",
+    "xx_best_25_23_28"
 ]
 
 # VAL_IMAGE_IDS = []
@@ -179,7 +172,6 @@ class NucleusInferenceConfig(NucleusConfig):
 # 加载数据
 ################
 class NucleusDataset(utils.Dataset):
-
     def load_nucleus(self, dataset_dir, subset):
         """Load a subset of the nuclei dataset.
 
@@ -199,7 +191,7 @@ class NucleusDataset(utils.Dataset):
         # "val": use hard-coded list above
         # "train": use data from stage1_train minus the hard-coded list above
         # else: use the data from the specified sub-directory
-        print(subset)
+        # print(subset)
         assert subset in ["train", "val", "stage1_train", "stage1_test", "stage2_test"]
         subset_dir = "stage1_train" if subset in ["train", "val"] else subset
         dataset_dir = os.path.join(dataset_dir, subset_dir)
@@ -236,7 +228,7 @@ class NucleusDataset(utils.Dataset):
         # Read mask files from .png image
         mask = []
         labels = []
-        #print(mask_dir)
+        print(mask_dir+'xxxxxx')
         for f in next(os.walk(mask_dir))[2]:
             if f.endswith(".png"):
                 m = skimage.io.imread(os.path.join(mask_dir, f)).astype(bool)
@@ -267,7 +259,7 @@ class NucleusDataset(utils.Dataset):
 #  Training
 ############################################################
 
-def train(model, dataset_dir, subset):
+def train(model, dataset_dir, subset, config):
     """Train the model."""
     # Training dataset.
     dataset_train = NucleusDataset()
@@ -512,7 +504,7 @@ if __name__ == '__main__':
 
     # Train or evaluate
     if args.command == "train":
-        train(model, args.dataset, args.subset)
+        train(model, args.dataset, args.subset, config)
     elif args.command == "detect":
         detect(model, args.dataset, args.subset)
     else:
