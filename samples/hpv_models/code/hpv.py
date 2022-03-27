@@ -20,10 +20,11 @@
 #     python nucleus_li.py train --dataset=F:/stage1_train --subset=train --weights=C:/Users/LXG/Mask_RCNN/resnet50.h5
 #     python hpv.py train --subset=train --dataset=/home/hqyone/mnt/2tb/github/MaskRCNN_TF1/samples/hpv_models/data --weights=coco --logs /home/hqyone/mnt/2tb/github/MaskRCNN_TF1/samples/hpv_models/logs
 #     # Resume training a model that you had trained earlier
-#     python3 lung.py train --dataset=/path/to/dataset --subset=train --weights=last
+#     python3 hpv.py train --dataset=/path/to/dataset --subset=train --weights=last
 #
 #     # Generate submission file
 #     python3 lung.py detect --dataset=/path/to/dataset --subset=train --weights=<last or /path/to/weights.h5>
+#     python3 hpv.py detect --dataset=/home/hqyone/mnt/2tb/github/MaskRCNN_TF1/samples/hpv_models/data --subset=stage1_test --weights=/home/hqyone/mnt/2tb/github/MaskRCNN_TF1/samples/hpv_models/logs/mask_rcnn_model3-3_0150.h5
 # 
 # """
 
@@ -485,7 +486,6 @@ if __name__ == '__main__':
         # Start from ImageNet trained weights
         weights_path = model.get_imagenet_weights()
     else:
-        print("111111111111111111111111111111111111111111111")
         weights_path = args.weights
 
     # Load weights
@@ -497,9 +497,7 @@ if __name__ == '__main__':
         model.load_weights(weights_path, by_name=True, exclude=[
             "mrcnn_class_logits", "mrcnn_bbox_fc",
             "mrcnn_bbox", "mrcnn_mask"])
-        print("222222222222222222222222222222222222222")
     else:
-        print("111111111111111111111111111111111111111111111")
         model.load_weights(weights_path, by_name=True)
 
     # Train or evaluate
